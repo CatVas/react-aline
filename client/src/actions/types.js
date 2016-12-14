@@ -1,0 +1,7 @@
+export const CONTACT_MSG_RESET = 'CONTACT_MSG_RESET';
+export const CONTACT_MSG_SET = 'CONTACT_MSG_SET';
+
+export const USER_AUTH = 'USER_AUTH';
+export const USER_AUTH_ERROR = 'USER_AUTH_ERROR';
+export const USER_AUTH_ERROR_CLEAR = 'USER_AUTH_ERROR_CLEAR';
+export const USER_UNAUTH = 'USER_UNAUTH';

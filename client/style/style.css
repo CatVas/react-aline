@@ -1,0 +1,62 @@
+.contactpage h1 {
+  text-align: center;
+}
+.contactpage-subhd {
+  text-align: center;
+}
+
+.door li {
+  padding: 15px 0 0 15px;
+}
+.door li a {
+  color: #337ab7 !important;
+  display: inline-block !important;
+  padding: 0 !important;
+}
+
+.f-contact {
+  text-align: center;
+}
+
+.footer {
+  padding: 0 0 1em;
+  text-align: center;
+}
+.footer p {
+  margin: 0;
+}
+
+.form-group {
+  margin: 0 0 1.3em !important;
+  position: relative;
+}
+.form-group .help-block {
+  bottom: 0;
+  font-size: 0.85em;
+  left: 0;
+  margin: 0 0 -1.4em;
+  position: absolute;
+  width: 100%;
+}
+
+.header .header-brand.navbar-brand {
+  color: #00B72D;
+}
+.header .header-brand.navbar-brand:hover {
+  color: #0f0;
+}
+
+.homepage {
+  text-align: center;
+}
+
+.page {
+  margin: 0 0 2em;
+}
+
+
+@media (max-width: 768px) {
+  .door li {
+    padding-top: 0;
+  }
+}
