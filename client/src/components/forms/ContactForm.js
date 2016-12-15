@@ -10,7 +10,9 @@ import InputText from './InputText';
 
 
 let Contact = props => {
-  const { handleSubmit, invalid, reset, sendMessage } = props;
+  const {
+    authenticated, handleSubmit, invalid, reset, sendMessage, userEmail, userName,
+  } = props;
 
   const btnClass = `btn btn-primary${invalid ? ' disabled' : ''}`;
   const handleFormSubmit = ({ email, message, userName }) => {
@@ -22,6 +24,7 @@ let Contact = props => {
       <form className="f-contact col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3" onSubmit={handleSubmit(handleFormSubmit)}>
         <Field
           component={InputText}
+          defaultValue={authenticated ? userName : ''}
           name="userName"
           placeholder="Username"
           type="text"
@@ -29,6 +32,7 @@ let Contact = props => {
 
         <Field
           component={InputText}
+          defaultValue={authenticated ? userEmail : ''}
           name="email"
           placeholder="Email"
           type="email"
@@ -47,7 +51,13 @@ let Contact = props => {
   );
 };
 
-Contact = connect(null, actions)(Contact);
+function mapStateToProps(state) {
+  const { authenticated, email, userName } = state.auth;
+
+  return { authenticated, userEmail: email, userName };
+}
+
+Contact = connect(mapStateToProps, actions)(Contact);
 
 export default reduxForm({
   form: 'contact',

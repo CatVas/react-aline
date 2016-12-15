@@ -7,7 +7,7 @@ describe('InputText', () => {
     let cmp;
     const props = {
       input: {},
-      meta: { dirty: true, error: 'Bad smth' },
+      meta: { touched: true, error: 'Bad smth' },
     };
 
     beforeEach(() => {

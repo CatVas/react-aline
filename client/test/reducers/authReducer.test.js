@@ -14,10 +14,14 @@ describe('authReducer', () => {
   });
 
   it('action USER_AUTH', () => {
-    const action = { payload: { userName: 'Bob' }, type: USER_AUTH };
+    const action = {
+      payload: { email: 'bob@bob.com', userName: 'Bob' },
+      type: USER_AUTH
+    };
     const state = authReducer(defaultState, action);
     expect(state).to.eql({
       authenticated: true,
+      email: action.payload.email,
       error: '',
       userName: action.payload.userName,
     });
@@ -28,6 +32,7 @@ describe('authReducer', () => {
     const state = authReducer(defaultState, action);
     expect(state).to.eql({
       authenticated: false,
+      email: '',
       error: action.payload,
       userName: defaultUserName,
     });

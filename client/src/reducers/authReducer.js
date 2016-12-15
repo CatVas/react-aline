@@ -6,6 +6,7 @@ import {
 
 export const defaultState = {
   authenticated: false,
+  email: '',
   error: '',
   userName: defaultUserName,
 };
@@ -19,6 +20,7 @@ export default function(state = defaultState, action) {
     case USER_AUTH:
       return Object.assign({}, state, {
         authenticated: true,
+        email: action.payload && action.payload.email || '',
         error: '',
         userName: action.payload && action.payload.userName || defaultUserName,
       });
