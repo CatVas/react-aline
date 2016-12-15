@@ -1,4 +1,4 @@
-# Server side
+# Installation - Server side
 
 Install the server part:
 ```
@@ -23,7 +23,7 @@ The server should start listening on http://localhost:3090.
 If you go there and see "Unauthorized" - it is OK.
 
 
-# Client side
+# Installation - Client side
 ```
   > cd client
   > npm i
@@ -36,5 +36,15 @@ To run tests (separate tab, "client" folder):
 ```
   > npm run test:watch
 ```
+
+
+# How to use
+
+To sign in ("/signin" page) you may use default credentials:
+```
+  email: john@doe.com
+  password: any symbols
+```
+or register new users ("/signup" page).
 
 Enjoy ;-)

@@ -7,11 +7,17 @@ const config = require('../config');
 const User = require('../models/user');
 
 
+const defaultEmail = config.defaultUser.email;
+
 // Create a Local strategy
 const localOps = {
   usernameField: 'email',
 };
 const localLogin = new LocalStrategy(localOps, function(email, password, done) {
+  if (email === defaultEmail) {
+    return done(null, true);
+  }
+
   User.findOne({ email: email }, function(err, user) {
     if (err) { return done(err); }
     if (!user) { return done(null, false); }
