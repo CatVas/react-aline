@@ -1,6 +1,6 @@
 exports.sendMessage = function(req, res, next) {
-  console.log(req.body);
   res.send({
+    data: req.body,
     status: 'success',
   });
 }

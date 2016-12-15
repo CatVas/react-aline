@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import React from 'react';
+import React, { Component } from 'react';
 
 import * as actions from '../../actions';
 import {
@@ -9,51 +9,69 @@ import {
 import InputText from './InputText';
 
 
-let Contact = props => {
-  const {
-    authenticated, handleSubmit, invalid, reset, sendMessage, userEmail, userName,
-  } = props;
+function initFormValues({ authenticated, initialize, userEmail, userName }){
+  initialize({
+    email: authenticated ? userEmail : '',
+    userName: authenticated ? userName : '',
+  });
+}
 
-  const btnClass = `btn btn-primary${invalid ? ' disabled' : ''}`;
-  const handleFormSubmit = ({ email, message, userName }) => {
+class Contact extends Component {
+  constructor(props) {
+    const { authenticated, initialize, userEmail, userName } = props;
+    super(props);
+    initFormValues({ authenticated, initialize, userEmail, userName });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.authenticated !== nextProps.authenticated) {
+      const { authenticated, initialize, userEmail, userName } = nextProps;
+      initFormValues({ authenticated, initialize, userEmail, userName });
+    }
+  }
+
+  handleFormSubmit = ({ email, message, userName }) => {
+    const { reset, sendMessage } = this.props;
     sendMessage({ email, message, userName }, () => reset());
   };
 
-  return (
-    <div className="row">
-      <form className="f-contact col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3" onSubmit={handleSubmit(handleFormSubmit)}>
-        <Field
-          component={InputText}
-          defaultValue={authenticated ? userName : ''}
-          name="userName"
-          placeholder="Username"
-          type="text"
-        />
+  render() {
+    const { handleSubmit, invalid } = this.props;
+    const btnClass = `btn btn-primary${invalid ? ' disabled' : ''}`;
 
-        <Field
-          component={InputText}
-          defaultValue={authenticated ? userEmail : ''}
-          name="email"
-          placeholder="Email"
-          type="email"
-        />
+    return (
+      <div className="row">
+        <form className="f-contact col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3" onSubmit={handleSubmit(this.handleFormSubmit)}>
+          <Field
+            component={InputText}
+            name="userName"
+            placeholder="Username"
+            type="text"
+          />
 
-        <Field
-          component={InputText}
-          name="message"
-          placeholder="Message"
-          type="textarea"
-        />
+          <Field
+            component={InputText}
+            name="email"
+            placeholder="Email"
+            type="email"
+          />
 
-        <button className={btnClass} type="submit">Send</button>
-      </form>
-    </div>
-  );
+          <Field
+            component={InputText}
+            name="message"
+            placeholder="Message"
+            type="textarea"
+          />
+
+          <button className={btnClass} type="submit">Send</button>
+        </form>
+      </div>
+    );
+  }
 };
 
 function mapStateToProps(state) {
   const { authenticated, email, userName } = state.auth;
-
   return { authenticated, userEmail: email, userName };
 }
 
@@ -61,8 +79,9 @@ Contact = connect(mapStateToProps, actions)(Contact);
 
 export default reduxForm({
   form: 'contact',
-  validate({ email, message, userName }) {
+  validate(values) {
     const errors = {};
+    const { email, message, userName } = values;
 
     if (!email) {
       errors.email = email_is_required;

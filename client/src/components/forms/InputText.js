@@ -6,8 +6,7 @@ import React from 'react';
 
 const InputText = props => {
   const {
-    defaultValue,
-    input: { name, onBlur, onChange, onFocus, value },
+    input: { name, onBlur, onChange, value },
     meta: { error, touched, visited },
     placeholder,
     type,
@@ -26,10 +25,9 @@ const InputText = props => {
         name={name}
         onBlur={onBlur}
         onChange={onChange}
-        onFocus={onFocus}
         placeholder={placeholder || ''}
         type={type || 'text'}
-        value={visited ? value : (defaultValue || '')}
+        value={value}
       />
       {errorMsg}
     </div>

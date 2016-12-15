@@ -108,7 +108,7 @@ export function signup({ email, password, userName }, cb) {
 
       feedUserDataInSession({ token, userEmail: email, userName });
       dispatch({
-        payload: { userName: userNameToSave },
+        payload: { email, userName: userNameToSave },
         type: USER_AUTH,
       });
       cb && cb();
