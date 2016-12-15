@@ -14,6 +14,8 @@ export const password_is_required = 'Password is required';
 export const passwords_must_coincide = 'Passwords must coincide';
 export const provide_email_password = 'Please provide email and password';
 
+export const sessionIdName = 'sessionId';
+
 export const thanks_well_answer_you_soon = 'Thank you! We will answer you soon';
 
 export const what_is_your_name = 'What is your name, please?';

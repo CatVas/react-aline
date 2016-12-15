@@ -6,15 +6,16 @@ import React from 'react';
 
 const InputText = props => {
   const {
-    input: { name, onChange, value },
-    meta: { dirty, error },
+    defaultValue,
+    input: { name, onBlur, onChange, onFocus, value },
+    meta: { error, touched, visited },
     placeholder,
     type,
   } = props;
 
-  const classNameForAll = `form-group ${dirty && error ? 'has-error' : ''}`;
+  const classNameForAll = `form-group ${touched && error ? 'has-error' : ''}`;
   const Element = (type === 'textarea') ? 'textarea' : 'input';
-  const errorMsg = dirty && error
+  const errorMsg = touched && error
     ? <span className="help-block">{error}</span>
     : '';
 
@@ -23,10 +24,12 @@ const InputText = props => {
       <Element
         className="form-control"
         name={name}
+        onBlur={onBlur}
         onChange={onChange}
+        onFocus={onFocus}
         placeholder={placeholder || ''}
         type={type || 'text'}
-        value={value}
+        value={visited ? value : (defaultValue || '')}
       />
       {errorMsg}
     </div>

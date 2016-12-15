@@ -2,7 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-  apiUrl, contactMsgResetAfterMs, defaultUserName, email_is_in_use, provide_email_password, thanks_well_answer_you_soon, wrong_credentials_user_not_registered,
+  apiUrl, contactMsgResetAfterMs, defaultUserName, email_is_in_use, provide_email_password, sessionIdName, thanks_well_answer_you_soon, wrong_credentials_user_not_registered,
 } from '../constants';
 import {
   CONTACT_MSG_RESET, CONTACT_MSG_SET,
@@ -14,8 +14,20 @@ export function clearAuthError() {
   return { type: USER_AUTH_ERROR_CLEAR };
 }
 
+function clearUserDataFromSession(token) {
+  sessionStorage.removeItem(sessionIdName);
+  sessionStorage.removeItem(`userEmail-${token}`);
+  sessionStorage.removeItem(`userName-${token}`);
+}
+
 export function contactMsgReset() {
   return { type: CONTACT_MSG_RESET };
+}
+
+function feedUserDataInSession({ token, userEmail, userName }) {
+  sessionStorage.setItem(sessionIdName, token);
+  sessionStorage.setItem(`userEmail-${token}`, userEmail);
+  sessionStorage.setItem(`userName-${token}`, userName);
 }
 
 export function sendMessage({ email, message, userName }, cb) {
@@ -48,10 +60,9 @@ export function signin({ email, password }, cb) {
     .then(res => {
       const { token, user: { userName } } = res.data;
 
-      sessionStorage.setItem('sessionId', token);
-      sessionStorage.setItem(`userName-${token}`, userName);
+      feedUserDataInSession({ token, userEmail: email, userName });
       dispatch({
-        payload: { userName },
+        payload: { email, userName },
         type: USER_AUTH,
       });
       cb && cb();
@@ -67,10 +78,9 @@ export function signin({ email, password }, cb) {
 }
 
 export function signout() {
-  const sessionId = sessionStorage.getItem('sessionId');
+  const token = sessionStorage.getItem(sessionIdName);
 
-  sessionStorage.removeItem('sessionId');
-  sessionStorage.removeItem(`userName-${sessionId}`);
+  clearUserDataFromSession(token);
 
   return { type: USER_UNAUTH };
 }
@@ -96,9 +106,7 @@ export function signup({ email, password, userName }, cb) {
     .then(res => {
       const { token, userName } = res.data;
 
-      sessionStorage.setItem('sessionId', token);
-      sessionStorage.setItem(`userName-${token}`, userName);
-
+      feedUserDataInSession({ token, userEmail: email, userName });
       dispatch({
         payload: { userName: userNameToSave },
         type: USER_AUTH,

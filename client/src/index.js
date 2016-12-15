@@ -18,10 +18,11 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 const sessionId = sessionStorage.getItem('sessionId');
 const userName = sessionStorage.getItem(`userName-${sessionId}`);
+const userEmail = sessionStorage.getItem(`userEmail-${sessionId}`);
 
 if (sessionId) {
   store.dispatch({
-    payload: { userName },
+    payload: { email: userEmail, userName },
     type: USER_AUTH,
   });
 }
