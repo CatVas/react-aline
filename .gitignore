@@ -2,6 +2,8 @@ client/node_modules
 client/bundle.js
 client/npm-debug.log
 
+npm-debug.log
+
 server/node_modules
 
 *.txt
