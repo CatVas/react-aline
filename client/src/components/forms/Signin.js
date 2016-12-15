@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
 
 import * as actions from '../../actions';
 import { email_is_required, password_is_required } from '../../constants';
@@ -24,9 +24,6 @@ class Signin extends Component {
     const { authError, handleSubmit, invalid, pristine } = this.props;
 
     const btnClass = `btn btn-primary ${invalid || pristine ? 'disabled' : ''}`;
-    const errorForm = authError
-      ? <p className="bg-danger text-danger">{authError}</p>
-      : '';
 
     return (
       <div className="row">
@@ -44,7 +41,9 @@ class Signin extends Component {
             placeholder="Password"
             type="password"
           />
-          {errorForm}
+
+          <p className="bg-danger text-danger">{authError}</p>
+
           <button className={btnClass} type="submit">Sign In</button>
         </form>
       </div>

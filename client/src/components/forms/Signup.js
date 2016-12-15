@@ -33,9 +33,6 @@ class Signup extends Component {
     const { authError, handleSubmit, invalid, pristine } = this.props;
 
     const btnClass = `btn btn-primary ${invalid || pristine ? 'disabled' : ''}`;
-    const errorForm = authError
-      ? <p className="bg-danger text-danger">{authError}</p>
-      : '';
 
     return (
       <div className="row">
@@ -68,7 +65,7 @@ class Signup extends Component {
             type="password"
           />
 
-          {errorForm}
+          <p className="bg-danger text-danger">{authError}</p>
 
           <button className={btnClass} type="submit">Sign Up</button>
         </form>

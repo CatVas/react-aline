@@ -2,7 +2,7 @@ import { expect, renderComponent } from '../../test_helper';
 import Signin from '../../../src/components/forms/Signin';
 
 
-/*describe('Signin', () => {
+describe('Signin', () => {
   describe('Error message under the form', () => {
     let cmp;
     const state = {
@@ -19,9 +19,9 @@ import Signin from '../../../src/components/forms/Signin';
       expect(cmp.find('.bg-danger.text-danger')).to.exist;
     });
 
-    it('shows passed message text', () => {
+    it('clears error message at rendering', () => {
       expect(cmp.find('.bg-danger.text-danger').text())
-        .to.eql(state.auth.error);
+        .to.eql('');
     });
   });
-});*/
+});
